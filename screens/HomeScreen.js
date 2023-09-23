@@ -6,8 +6,12 @@ import { GOOGLE_MAPS_APIKEY } from "@env";
 import tw from 'tailwind-react-native-classnames';
 import iconImage from '../figma/icon.png';
 import NavOptions from '../components/NavOptions';
+import { useDispatch } from 'react-redux';
+import { setDestination, selectOrigin, setOrigin } from '../slices/navSlice';
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -32,6 +36,18 @@ const HomeScreen = () => {
               fontSize: 18,
             },
           }}
+          onPress={(data, details = null) => {
+            dispatch(setOrigin({
+                location: details.geometry.location,
+                description: data.description,
+            }));
+
+            dispatch(setDestination(null));
+          }}
+          fetchDetails={true}
+          returnKeyType={"search"}
+          enablePoweredByContainer={false}
+          minLength={2}
           query={{
             key: GOOGLE_MAPS_APIKEY,
             language: "en",
