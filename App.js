@@ -7,8 +7,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 
 import SplashScreen from "./screens/SplashScreen";
-import HomeScreen from "./screens/HomeScreen";
-import MapScreen from "./screens/MapScreen";
+import MapScreen from "./screens/MapScreen"; 
+import AdditionalSplashScreen from "./components/AdditionalSplashScreen"; 
 
 const Stack = createStackNavigator();
 
@@ -18,16 +18,16 @@ export default function App() {
       <NavigationContainer>
         <SafeAreaProvider>
           <Stack.Navigator initialRouteName="Splash">
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Splash"
               component={SplashScreen}
               options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
+            /> */}
+            {/* <Stack.Screen
+              name="AdditionalSplashScreen"
+              component={AdditionalSplashScreen}
               options={{ headerShown: false }}
-            />
+            /> */}
             <Stack.Screen
               name="MapScreen"
               component={MapScreen}

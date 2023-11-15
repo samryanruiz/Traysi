@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import iconImage from "../assets/icon.png";
-import titleImage from "../assets/ETRAYSI.png"; // Import your title image
+import titleImage from "../assets/ETRAYSI.png";
+
+import AdditionalSplashScreen from "../components/AdditionalSplashScreen";
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     const splashTimeout = setTimeout(() => {
       clearTimeout(splashTimeout);
-      navigation.replace("Home");
-    }, 3000);
+      navigation.replace("AdditionalSplashScreen");
+    }, 2000);
   }, [navigation]);
 
   return (
@@ -23,11 +25,11 @@ const SplashScreen = ({ navigation }) => {
       />
       <Image
         style={{
-          width: 200, // Adjust the width as needed
-          height: 50, // Adjust the height as needed
+          width: 200,
+          height: 50,
           resizeMode: "contain",
         }}
-        source={titleImage} // Use your title image source
+        source={titleImage}
       />
     </View>
   );
