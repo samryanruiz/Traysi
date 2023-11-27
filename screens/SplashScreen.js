@@ -3,7 +3,7 @@ import { View, Image, StyleSheet } from "react-native";
 import iconImage from "../assets/icon.png";
 import titleImage from "../assets/ETRAYSI.png";
 
-import AdditionalSplashScreen from "../components/AdditionalSplashScreen";
+import AdditionalSplashScreen from "./AdditionalSplashScreen";
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {

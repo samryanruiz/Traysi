@@ -8,7 +8,8 @@ import { selectOrigin, setDestination, setOrigin } from "../slices/navSlice";
 
 import Map from "../components/Map";
 import NavigateCard from "../components/NavigateCard";
-import RideCalculatorCard from "../components/RideCalculatorCard";
+import RideCalculatorCard from "../components/RideOptionsCard";
+import RideOptionsCard from "../components/RideOptionsCard";
 
 const MapScreen = () => {
   const Stack = createStackNavigator();
@@ -33,8 +34,8 @@ const MapScreen = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="RideCalculatorCard"
-            component={RideCalculatorCard}
+            name="RideOptionsCard"
+            component={RideOptionsCard}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
