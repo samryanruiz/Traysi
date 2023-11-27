@@ -14,13 +14,13 @@ const data = [
     id: "123",
     icon: "home",
     location: "Home",
-    destination: "Code Street, London, UK",
+    destination: "Araneta City, Cubao, Quezon City, Philippines",
   },
   {
     id: "456",
     icon: "briefcase",
     location: "Work",
-    destination: "London Eye, London, UK",
+    destination: "Technological Institute of the Philippines",
   },
 ];
 

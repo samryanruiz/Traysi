@@ -97,7 +97,7 @@ const NavigateCard = () => {
           <Text style={tw`text-white text-center`}>Rides</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={tw`flex flex-row justify-between w-24 px-4 py-3 rounded-full`}
         >
           <Icon
@@ -107,7 +107,7 @@ const NavigateCard = () => {
             size={16}
           />
           <Text style={tw`text-center`}>Eats</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );

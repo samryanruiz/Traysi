@@ -16,19 +16,19 @@ import { selectTravelTimeInformation } from "../slices/navSlice";
 
 const data = [
   {
-    id: "Uber-X-123",
+    id: "Tricycle-Regular-001",
     title: "Regular",
     multiplier: 1,
     image: "https://www.iconbolt.com/preview/facebook/ionicons-regular/person.svg",
   },
   {
-    id: "Uber-XL-456",
+    id: "Tricycle-Student-002",
     title: "Student",
     multiplier: 0.8,
     image: "https://as2.ftcdn.net/v2/jpg/02/19/98/93/1000_F_219989372_K1pBzmbiGfoMd6X5JJd5SYOVIBzSUN8f.jpg",
   },
   {
-    id: "Uber-LUX-789",
+    id: "Tricycle-Regular-003",
     title: "Senior Citizen",
     multiplier: 0.8,
     image: "https://static.vecteezy.com/system/resources/thumbnails/000/573/106/small/vector60-6964-01.jpg",
@@ -53,7 +53,7 @@ const RideOptionsCard = () => {
           <Icon name="chevron-left" type="fontawesome" />
         </TouchableOpacity>
         <Text style={tw`text-center text-xl flex-grow`}>
-          Select a Ride - {travelTimeInformation?.distance?.text}
+          Select
         </Text>
         <View style={{ width: 10 }} />
       </View>
