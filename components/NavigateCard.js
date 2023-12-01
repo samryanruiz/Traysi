@@ -23,7 +23,7 @@ const NavigateCard = () => {
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
       <Text style={tw`text-center py-5 text-xl`}>Good Morning, Bebelabs</Text>
-      
+
       {/* Source location input */}
       <View style={tw`border-t border-gray-200 flex-shrink`}>
         <View>
@@ -54,7 +54,7 @@ const NavigateCard = () => {
             debounce={400}
           />
         </View>
-        
+
         {/* Destination location input */}
         <View>
           <GooglePlacesAutocomplete
@@ -89,13 +89,13 @@ const NavigateCard = () => {
       <View
         style={tw`flex-row bg-white justify-evenly py-2 mt-auto border-t border-gray-100`}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate("RideOptionsCard")}
           style={tw`flex flex-row justify-between bg-black w-24 px-4 py-3 rounded-full`}
         >
           <Icon name="car" type="font-awesome" color="white" size={16} />
           <Text style={tw`text-white text-center`}>Rides</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* <TouchableOpacity
           style={tw`flex flex-row justify-between w-24 px-4 py-3 rounded-full`}
