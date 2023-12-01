@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 
-import MapScreen from "../screens/MapScreen";
+import MapScreen from "./MapScreen";
 
 const AdditionalSplashScreen = ({ navigation }) => {
   const images = [

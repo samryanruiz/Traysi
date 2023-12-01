@@ -1,85 +1,112 @@
-import { StyleSheet, View, PermissionsAndroid, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef } from "react";
 import MapView, { Marker } from "react-native-maps";
 import tw from "tailwind-react-native-classnames";
-import { useSelector } from "react-redux";
-import { selectOrigin } from "../slices/navSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectDestination,
+  selectOrigin,
+  setTravelTimeInformation,
+} from "../slices/navSlice";
+import MapViewDirections from "react-native-maps-directions";
+import { GOOGLE_MAPS_APIKEY } from "@env";
 
 const Map = () => {
   const origin = useSelector(selectOrigin);
-  const [hasLocationPermission, setHasLocationPermission] = useState(null);
+  const destination = useSelector(selectDestination);
+  const mapRef = useRef(null);
+  const dispatch = useDispatch();
+
+  const fitMarkers = () => {
+    if (mapRef.current && origin && destination) {
+      mapRef.current.fitToSuppliedMarkers(["origin", "destination"], {
+        edgePadding: { top: 100, right: 50, bottom: 50, left: 50 },
+        animated: true,
+      });
+    }
+  };
 
   useEffect(() => {
-    // Check and request location permission if needed
-    const requestLocationPermission = async () => {
+    if (!origin || !destination) return;
+
+    const getTravelTime = async () => {
       try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(
+            origin.description
+          )}&destinations=${encodeURIComponent(
+            destination.description
+          )}&key=${GOOGLE_MAPS_APIKEY}`
         );
-        setHasLocationPermission(
-          granted === PermissionsAndroid.RESULTS.GRANTED
-        );
-      } catch (err) {
-        console.warn(err);
+        const data = await response.json();
+
+        if (
+          data.status === "OK" &&
+          data.rows.length > 0 &&
+          data.rows[0].elements.length > 0
+        ) {
+          dispatch(setTravelTimeInformation(data.rows[0].elements[0]));
+        } else {
+          console.error("Invalid response from the Google Maps API:", data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch travel time information:", error);
       }
     };
 
-    requestLocationPermission();
-  }, []);
-
-  if (hasLocationPermission === null) {
-    // Permission request is still pending
-    return (
-      <View style={styles.container}>
-        <Text>Requesting location permission...</Text>
-      </View>
-    );
-  }
-
-  if (!hasLocationPermission) {
-    // Handle the case where location permission is not granted
-    return (
-      <View style={styles.container}>
-        <Text>Location permission is required to show the map.</Text>
-      </View>
-    );
-  }
-
-  // Set the bounds for Metro Manila
-  const metroManilaBounds = {
-    northEast: { latitude: 14.757, longitude: 121.056 },
-    southWest: { latitude: 14.396, longitude: 120.878 },
-  };
-
-  // Use the origin location if available, otherwise use the default location
-  const initialRegion = {
-    latitude: origin?.location?.lat || 13.41,
-    longitude: origin?.location?.lng || 122.56,
-    latitudeDelta:
-      metroManilaBounds.northEast.latitude -
-      metroManilaBounds.southWest.latitude,
-    longitudeDelta:
-      metroManilaBounds.northEast.longitude -
-      metroManilaBounds.southWest.longitude,
-  };
+    getTravelTime();
+  }, [origin, destination, GOOGLE_MAPS_APIKEY]);
 
   return (
     <MapView
+      ref={mapRef}
       style={tw`flex-1`}
       mapType="mutedStandard"
-      initialRegion={initialRegion}
+      initialRegion={{
+        latitude: 14.651335,
+        longitude: 121.049107,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      }}
     >
-      {/* Add any markers or other map components here */}
+      {origin && destination && (
+        <MapViewDirections
+          origin={origin.description}
+          destination={destination.description}
+          apikey={GOOGLE_MAPS_APIKEY}
+          strokeWidth={3}
+          strokeColor="black"
+          onReady={fitMarkers}
+        />
+      )}
+
+      {origin?.location && (
+        <Marker
+          coordinate={{
+            latitude: origin.location.lat,
+            longitude: origin.location.lng,
+          }}
+          title="Origin"
+          description={origin.description}
+          identifier="origin"
+        />
+      )}
+
+      {destination?.location && (
+        <Marker
+          coordinate={{
+            latitude: destination.location.lat,
+            longitude: destination.location.lng,
+          }}
+          title="Destination"
+          description={destination.description}
+          identifier="destination"
+        />
+      )}
     </MapView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
-
 export default Map;
+
+const styles = StyleSheet.create({});
